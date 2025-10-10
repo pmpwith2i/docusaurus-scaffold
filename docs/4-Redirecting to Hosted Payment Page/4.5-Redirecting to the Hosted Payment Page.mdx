@@ -1,0 +1,75 @@
+---
+sidebar_position: 5
+---
+
+# Redirecting to the Hosted Payment Page
+
+With the requestId obtained from the API, the final step is to redirect the user to the SnapPay Hosted
+Payment Page. The URL is constructed by appending the requestId to the SnapPay Hosted Page URL.
+
+
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+    defaultValue="java"
+    values={[
+        {label: 'Java', value: 'java'},
+        {label: 'C#', value: 'c#'},
+    ]}>
+<TabItem value="java">
+
+```java showLineNumbers"
+String HostedPageUrl = "https://snappaydirect-
+cert.fiserv.com / interop / HostedPaymentPage / ProcessRequest ? reqNo = " +
+response.getRequestid();
+log.info("Snappay Hosted page: {}", HostedPageUrl);
+HostedPageUrl =
+    $ "https://snappaydirect-
+cert.fiserv.com / interop / HostedPaymentPage / ProcessRequest ? reqNo = {
+    requestID
+}
+";
+```
+
+</TabItem>
+
+<TabItem value="c#">
+
+```csharp showLineNumbers"
+HostedPageUrl =
+  $"https://snappaydirect-
+cert.fiserv.com/interop/HostedPaymentPage/ProcessRequest?reqNo={requestID}";
+```
+
+</TabItem>
+</Tabs>
+
+- **Redirection**: In an actual implementation, you would likely use Spring’s redirect functionality to
+send the user to this URL, completing the payment flow.
+
+## Hosted Payment Page – Credit Card
+
+<img src='/img/4/1.png' style={{width: 400}} />
+
+
+## Hosted Payment Page – ACH
+
+<img src='/img/4/2.png' style={{width: 400}} />
+
+---
+
+:::warning[Redirection]
+
+It is up to your application to redirect the user back to a specified redirect URL after the payment flow is
+complete.
+
+:::
+
+:::warning[Verify Response]
+
+We recommend calling the [Get Transaction API](#) after every payment execution to verify the transaction
+response.
+
+:::

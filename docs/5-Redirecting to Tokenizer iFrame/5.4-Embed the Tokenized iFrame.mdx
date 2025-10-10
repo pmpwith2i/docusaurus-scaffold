@@ -1,0 +1,113 @@
+---
+sidebar_position: 4
+---
+
+# Embed the Tokenized iFrame
+
+The final step is embedding the Tokeized iFrame into the HTML With the requestId obtained from the
+API. The URL is constructed by appending the requestId to the SnapPay Tokenized iFrame URL.
+
+
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+    defaultValue="java"
+    values={[
+        {label: 'Java', value: 'java'},
+        {label: 'C#', value: 'c#'},
+    ]}>
+<TabItem value="java">
+
+```java showLineNumbers"
+<form name = "tokenform" id = "tokenform" >
+  <label for = "tokenid" > Card: < /label> 
+  <iframe id = "tokenFrame"
+          name = "tokenFrame"
+          src = "'https://snappaydirect-cert.fiserv.com/UPIUI/SingleFieldTokenizer?reqid=' + ${reqId}"
+          frameborder = "0"
+          scrolling = "no"> 
+  </iframe> 
+</form>
+```
+
+- **Redirection**: In an actual implementation, you would likely use Spring’s redirect functionality to
+send the user to this URL, completing the payment flow.
+
+</TabItem>
+
+<TabItem value="c#">
+
+```csharp showLineNumbers"
+<form name = "tokenform" id = "tokenform">
+  <label for = "tokenid"> Card: </label> 
+  <iframe id = "tokenFrame"
+          name = "tokenFrame"
+          frameborder = "0"
+          scrolling = "no" > 
+  </iframe> 
+</form>
+<script >
+  // Get the requestID from the ViewData passed from the controller
+  const requestID = '@ViewData["requestID"]';
+  // Construct the URL and set it as the src of the iframe
+  if (requestID) {
+    const iframe = document.getElementById("tokenFrame");
+    iframe.src = `https://snappaydirect-cert.fiserv.com/UPIUI/SingleFieldTokenizer?reqid=${requestID}`;
+  } 
+</script>
+```
+
+- **Redirection**: In an actual implementation, you would likely use C#’s redirect functionality to send
+the user to this URL, completing the payment flow.
+
+</TabItem>
+</Tabs>
+
+To capture the *tokenid* and the *card type* returned by the SnapPay Tokenized iFrame, we can use the
+following code snippet in **JavaScript**:
+
+```javascript showLineNumbers
+window.addEventListener('message', receiveMessage, false);
+
+function receiveMessage(event) {
+    let data;
+    // Ensure that event data is valid JSON
+    try {
+        data = JSON.parse(event.data);
+    } catch (e) {
+        console.log('Invalid JSON data received:', event.data);
+        return;
+    }
+    token value
+    type value
+    submit button
+    // If success, capture token and cardType
+    if (data.success) {
+        document.getElementById('tokenid').value = data.token; // Set
+        document.getElementById('cardType').value = data.cardtype; // Set card
+        document.getElementById('submitButton').disabled = false; // Enable
+        console.log('Token:', data.token);
+        console.log('Card Type:', data.cardtype);
+    } else {
+        // Handle error case (you can display an error message or take action)
+        console.log('Error:', data.message);
+    }
+}
+```
+
+To set the *tokenid* and the *card type* in the hidden fields returned by the SnapPay Tokenized iFrame, we
+can use the following code snippet in **HTML**:
+
+```html showLineNumbers
+<form id="chargeForm" onsubmit="submitChargeForm(event)">
+  <!-- Hidden fields to capture token and card type -->
+  <input type="hidden" id="tokenid" name="token"/>
+  <input type="hidden" id="cardType" name="cardType"/>
+  <!-- Submit button -->
+  <button id="submitButton" type="submit">Generate Charge</button>
+  <h1>Transaction Response</h1>
+  <pre id="json-response"></pre>
+</form> 
+```

@@ -1,0 +1,50 @@
+---
+sidebar_position: 3
+---
+
+# Calling the SnapPay API
+
+Once the HMAC is generated, it’s time to send the request to the SnapPay API to get a requestId. The
+snapPayService.getRequestID method is invoked with the required parameters: accountId, merchantId,
+HMAC, API endpoint, and payload.
+
+
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+    defaultValue="java"
+    values={[
+        {label: 'Java', value: 'java'},
+        {label: 'C#', value: 'c#'},
+    ]}>
+<TabItem value="java">
+
+```java showLineNumbers"
+SnapPayResponse response = snapPayService.getRequestID(form.getAccountId(),
+form.getMerchantId(),
+hmac, endpoint, contentToEncode);
+```
+
+- **Return Value**: The SnapPayResponse object, which contains a requestId, status, and other
+details from the API response.
+
+</TabItem>
+
+<TabItem value="c#">
+
+```csharp showLineNumbers"
+string requestID = await snapPayService.GetRequestIDAsync(
+  accountId,
+  merchantId,
+  Hmac,
+  "https://snappaydirectapi-cert.fiserv.com",
+  contentToEncode
+);
+```
+
+- **Return Value**: The requestId string.
+
+</TabItem>
+</Tabs>

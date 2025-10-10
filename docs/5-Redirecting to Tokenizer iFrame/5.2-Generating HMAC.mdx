@@ -1,0 +1,59 @@
+---
+sidebar_position: 2
+---
+
+# Generating HMAC
+
+The next step involves creating an HMAC signature. The ```HmacUtilGenerator.generateHMAC``` method is
+used here. The HMAC signature ensures that the API request is secure and that the data hasn’t been
+tampered with.
+
+
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+    defaultValue="java"
+    values={[
+        {label: 'Java', value: 'java'},
+        {label: 'C#', value: 'c#'},
+    ]}>
+<TabItem value="java">
+
+```java showLineNumbers"
+String hmac = HmacUtilGenerator.generateHMAC(endpoint + "api/interop/v2/GetRequestID",
+    "POST", contentToEncode, form.getAccountId(),
+    secretKey, useBodyContent, useMd5ForHmac);
+```
+
+</TabItem>
+
+<TabItem value="c#">
+
+```csharp showLineNumbers"
+Hmac = HmacUtilGenerator.GenerateHMAC(
+  accountId,
+  endpoint + "api/interop/v2/GetRequestID",
+  secretKey,
+  contentToEncode,
+  method,
+  "Yes",
+  useMd5ForHmac
+);
+```
+
+</TabItem>
+</Tabs>
+
+### Parameters
+1. **URL**: The SnapPay API endpoint
+2. **HTTP Method**: "POST"
+3. **Payload**: The contentToEncode string created earlier
+4. **Account ID**: Retrieved from the form
+5. **Secret Key**: Used to generate the HMAC (retrieved from form or configuration)
+6. **Use Body Content**: Determines if body should be considered for HMAC authentication or not
+7. **MD5 Flag**: Determines if MD5 should be used for hashing
+
+The HMAC is now stored in the hmac variable and will be passed in the API request headers for
+validation.
