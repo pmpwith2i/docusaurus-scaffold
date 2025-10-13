@@ -1,0 +1,44 @@
+---
+sidebar_position: 8
+sidebar_label: POST Read Input
+---
+
+# Read Input
+
+import ApiBadge from '@site/src/components/ApiBadge';
+
+**[<ApiBadge class='small' type="post" /> P2PE/readInput](https://developer.fiserv.com/product/SnapPay/api/?type=post&path=/P2PE/readInput&branch=main&version=3.0.1)**: A call to the readInput endpoint sends a prompt to the terminal to request user input, in a format specified in the request. See [Using readInput to Capture Customer Information](https://developer.fiserv.com/product/CardPointe/docs/?path=docs/documentation/CardPointeIntegratedTerminalDeveloperGuides.md&branch=develop#using-readinput-to-capture-customer-information) for more information.
+
+### Headers
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| accountid | *string* | Provide the SnapPay account ID as supplied by SnapPay. | Required: Agency Dependent |
+| merchantid | *string* | The Merchant ID. If you provide this parameter, SnapPay will bypass the logic of identifying the merchant ID for the transaction. For transactions of type 'T', always include the Merchant ID. | Required: Agency Dependent |
+
+### Request Schema
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| merchantId | *string* | Your Merchant ID, required for all requests. | Required: Agency Dependent |
+| hsn | *string* | The hardware service number for the terminal. | Required: Agency Dependent |
+| prompt | *string* | The text to send to the terminal display to prompt for confirmation. | Required: Agency Dependent |
+| beep | *boolean* | Specifies whether the terminal beeps until the prompt is accepted. <br /> If true, beep is enabled. If blank, the value defaults to false | Optional: Agency Dependent |
+| format | *string* | The readInput request reads data from the terminal keypad in the specified format. <br/>The format must be a valid getInput format. <br /> For more information on this formating, refer to getInputformat. | Required: Agency Dependent |
+
+### Response Schema
+
+| Parameter | Type | Description |
+|---|---|---|
+| Input | * | Returns the input provided at the terminal. <br />*The type and format of the input value depends on the getInput format specified in the request. |
+
+**Single-line string**
+``` 
+"prompt": "Enter your phone number",
+```
+
+``` 
+"format": "N10" 
+```
+
+<img src='/img/9/8.png' style={{width: 300}} />

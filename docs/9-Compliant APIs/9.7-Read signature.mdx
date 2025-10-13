@@ -1,0 +1,41 @@
+---
+sidebar_position: 6
+sidebar_label: POST Read Signature
+---
+
+# Read Signature
+
+import ApiBadge from '@site/src/components/ApiBadge';
+
+**[<ApiBadge class='small' type="post" /> P2PE/readSignature](https://developer.fiserv.com/product/SnapPay/api/?type=post&path=/P2PE/readSignature&branch=main&version=3.0.1)**: A call to the readSignature endpoint sends a prompt to the terminal to capture the cardholder's signature, which is then returned in the response. The readSignature endpoint is supported for terminal devices that support signature capture. See [Capturing and Handling Cardholder Signatures](https://developer.fiserv.com/product/CardPointe/docs/?path=docs/documentation/CardPointeIntegratedTerminalDeveloperGuides.md&branch=develop#capturing-and-handling-cardholder-signatures) for guidance on how and when to capture signatures.
+
+:::warning[Warning]
+The only time we recommend a signature requirement is for accepting Terms & Conditions.
+:::
+
+### Headers
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| accountid | *string* | Provide the SnapPay account ID as supplied by SnapPay. | Required: Agency Dependent |
+| merchantid | *string* | The Merchant ID. If you provide this parameter, SnapPay will bypass the logic of identifying the merchant ID for the transaction. For transactions of type 'T', always include the Merchant ID. | Required: Agency Dependent |
+
+### Request Schema
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| merchantId | *string* | Your Merchant ID, required for all requests. | Required: Agency Dependent |
+| hsn | *string* | The hardware service number for the terminal. | Required: Agency Dependent |
+| prompt | *string* | The text to send to the terminal display to prompt for confirmation. | Required: Agency Dependent |
+
+### Response Schema
+
+| Parameter | Type | Description |
+|---|---|---|---|
+| Signature | *object* | base64-encoded, gzipped BMP of the signature image |
+
+**Multiple-line string**
+``` 
+"prompt”: “I agree to follow the agreement.\nInvoice number 12341234 is a total of $125.35.\nI have read the details on the screen and agree to them." 
+```
+<img src='/img/9/6.png' style={{width: 400}} />

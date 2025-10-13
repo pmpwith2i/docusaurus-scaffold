@@ -1,0 +1,25 @@
+---
+sidebar_position: 10
+sidebar_label: POST Cancel
+---
+
+# Cancel
+
+import ApiBadge from '@site/src/components/ApiBadge';
+
+**[<ApiBadge class='small' type="post" /> P2PE/cancel](https://developer.fiserv.com/product/SnapPay/api/?type=post&path=/P2PE/cancel&branch=main&version=3.0.1)**: A call to the cancel endpoint sends a cancel command from the POS software to terminate any in-flight operations. If you use the cancel command to allow a merchant or cardholder to
+attempt to cancel a transaction in progress, you should also use the CardPointe Gateway API's inquireByOrderid request to verify the status of the transaction. A transaction cannot be canceled if the terminal service has already initiated the authorization request to the CardPointe Gateway; however, you can use the inquireByOrderid request to check the status of the transaction and void if necessary
+
+### Headers
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| accountid | *string* | Provide the SnapPay account ID as supplied by SnapPay. | Required: Agency Dependent |
+| merchantid | *string* | The Merchant ID. If you provide this parameter, SnapPay will bypass the logic of identifying the merchant ID for the transaction. For transactions of type 'T', always include the Merchant ID. | Required: Agency Dependent |
+
+### Request Schema
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| merchantId | *string* | Your Merchant ID, required for all requests. | Required: Agency Dependent |
+| hsn | *string* | The hardware service number for the terminal. | Required: Agency Dependent |

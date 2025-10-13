@@ -1,0 +1,24 @@
+---
+sidebar_position: 6
+sidebar_label: POST Clear Display
+---
+
+# Clear Display
+
+import ApiBadge from '@site/src/components/ApiBadge';
+
+**[<ApiBadge class='small' type="post" /> P2PE/clearDisplay](https://developer.fiserv.com/product/SnapPay/api/?type=post&path=/P2PE/clearDisplay&branch=main&version=3.0.1)**: A call to the clearDisplay endpoint sends a display command to the terminal with an empty string. This clears the current display prompt.
+
+### Headers
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| accountid | *string* | Provide the SnapPay account ID as supplied by SnapPay. | Required: Agency Dependent |
+| merchantid | *string* | The Merchant ID. If you provide this parameter, SnapPay will bypass the logic of identifying the merchant ID for the transaction. For transactions of type 'T', always include the Merchant ID. | Required: Agency Dependent |
+
+### Request Schema
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| merchantId | *string* | Your Merchant ID, required for all requests. | Required: Agency Dependent |
+| hsn | *string* | The hardware service number for the terminal. | Required: Agency Dependent |

@@ -1,0 +1,25 @@
+---
+sidebar_position: 1
+---
+
+# Devices
+
+:::warning[PCI]
+All devices covered below are PCI validated P2PE Devices. This designation allows the below devices to
+be used on any network without special permissions. Any device not covered below is NOT in scope for
+Texas DIR!
+:::
+
+| Device |  Manufacturer |  Connectivity |  Card Present/Card Not Present | Signature | User Guide | 
+| --- | --- | --- | --- | --- | --- | 
+| Link/2500 | Ingenico | Wi-Fi | Both | N | [Ingenico Link/2500 User Guide](https://support.cardpointe.com/integrated/terminal/link-2500/) | 
+|  Lane/7000 | Ingenico | Ethernet | Both | Y | [Ingenico Lane/7000 User Guide](https://support.cardpointe.com/integrated/terminal/lane-7000-8000/) | 
+| Mini | Clover|  Wi-Fi & Ethernet | Both | Y | [Clover Mini User Guide](https://support.cardpointe.com/integrated/terminal/mini/) | 
+
+The first step in integrating terminals into your application is by connecting the devices to the internet. The User Guides linked above will walk you through connecting your device. This is the only setting you should ever interact with. If you have any other issues with your devices, contact the CardPointe team for assistance.
+
+:::warning[Connect Device]
+Device must be connected to the web services for CardPointe before any API calls can be made against it. You can verify that the device is in a connected state at the bottom of the display
+:::
+
+<img class="bordered shadow" src='/img/7/1.png'  style={{width: 400}} />

@@ -1,0 +1,35 @@
+---
+sidebar_position: 1
+sidebar_label: POST Charge
+
+---
+
+# Charge
+
+import ApiBadge from '@site/src/components/ApiBadge';
+
+**[<ApiBadge type="post" /> /api/interop/v2/charge](https://developer.fiserv.com/product/SnapPay/api/?type=post&path=/api/interop/v2/charge&branch=main&version=V2)**: The Charge API performs a credit card charge or payment using a credit card token to insure the credit card is valid, has the requested credit limit available and to initiate the transfer of funds. This performs the functions of the Authorize API and Capture API in a single call.
+
+
+:::tip[Tip]
+We reviewed the Charge API in the Account Number Tokenizer section. However, this API can be called
+independently from the Account Number Tokenizer use case.
+:::
+
+### Headers
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| accountid | *string* | Provide the SnapPay account ID as supplied by SnapPay. | Required: Agency Dependent |
+| merchantid | *string* | The Merchant ID. If you provide this parameter, SnapPay will bypass the logic of identifying the merchant ID for the transaction. For transactions of type 'T', always include the Merchant ID. | Required: Agency Dependent |
+| Signature | *string* | HMAC Signature required for authentication. Refer to the "What's Needed" section under Documentation for more details. | Required: Agency Dependent |
+
+
+### Request Schema
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| accountid | *number* | Pass the SnapPay account ID Provided by SnapPay | Required: Agency Dependent |
+| userid | *string* | User ID sourced from an external application or the SnapPay portal | Required: Agency Dependent |
+| transactions | *array[object]* | This section contains an array of transaction details, which can include single or multiple transactions. | Required: Agency Dependent |
+| tokenid | *string* | Payment Gateway Token ID or Account ID for credit card or ACH transactions. | Required: Agency Dependent |

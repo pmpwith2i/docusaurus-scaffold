@@ -1,0 +1,31 @@
+---
+sidebar_position: 2
+sidebar_label: POST Get Transaction
+
+---
+
+# Get Transaction
+
+import ApiBadge from '@site/src/components/ApiBadge';
+
+**[<ApiBadge type="post" /> /api/interop/v2/getTransaction](https://developer.fiserv.com/product/SnapPay/api/?type=post&path=/api/interop/GetTransaction&branch=main&version=3.0.1)**: The GetTransaction API allows you to inquire about a previous transaction using various identifiers, such as transaction ID, order ID, reference, or purchase order. The response will return a list of transactions, as multiple transactions can share the same order ID, reference, or purchase order.
+
+:::tip[Tip]
+Get Transaction should be used after every payment execution to verify the transaction response. This
+will be helpful in avoiding dual payments.
+:::
+
+### Headers
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| accountid | *string* | Provide the SnapPay account ID as supplied by SnapPay. | Required: Agency Dependent |
+| Signature | *string* | HMAC Signature required for authentication. Refer to the "What's Needed" section under Documentation for more details. | Required: Agency Dependent |
+
+
+### Request Schema
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| accountid | *number* | Pass the SnapPay account ID Provided by SnapPay | Required: Agency Dependent |
+| transactionid | *string* | Enter the Payment Gateway transaction ID or the SnapPay payment transaction ID. <br /> The choice can be based on account parameters or ERP reference ID. | Required: Agency **traceid** |
