@@ -5,7 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'Confidence System',
+  title: 'Confidence Systems',
   tagline: 'Developer portal showcase',
   favicon: 'img/favicon.ico',
 
@@ -75,22 +75,23 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'Confidece Dev Portal',
+      title: 'Developer',
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        alt: 'Confidence Logo',
+        src: 'img/logo_confidence_blue.svg',
       },
-      items: [
-        {
-          type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
-          position: 'left',
-          label: 'Tutorial',
-        },
-      ],
+      // won't have top level links for POC
+      // items: [
+      //   {
+      //     type: 'docSidebar',
+      //     sidebarId: 'tutorialSidebar',
+      //     position: 'left',
+      //     label: 'Guide',
+      //   },
+      // ],
     },
     footer: {
-      style: 'dark',
+      style: 'light',
       // links: [
       //   {
       //     title: 'Docs',
@@ -132,9 +133,10 @@ const config: Config = {
       //     ],
       //   },
       // ],
-      copyright: `Copyright © ${new Date().getFullYear()} Confidence System, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Confidence Systems, Inc. All rights reserved. Built with Docusaurus.`,
     },
     prism: {
+      additionalLanguages: ['java', 'csharp'],
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
     },

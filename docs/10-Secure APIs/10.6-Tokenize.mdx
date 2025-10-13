@@ -1,0 +1,17 @@
+---
+sidebar_position: 6
+sidebar_label: POST Tokenize
+
+---
+
+# Tokenize
+
+import ApiBadge from '@site/src/components/ApiBadge';
+
+**[<ApiBadge type="post" /> /api/interop/tokenize](https://developer.fiserv.com/product/SnapPay/api/?type=post&path=/api/interop/tokenize&branch=main&version=3.0.1)**: The Tokenize API provides a token back when credit card is sent in clear text. This API also tokenizes ACH (bank account) details. The token ID is returned on success and can be used in subsequent calls like Authorize, Charge, etc.
+
+:::warning[Warning]
+
+Any application calling the Tokenize API is exposed since it will require having a credit card number saved in the application. This will most likely cause your agency to fall under SAQ D, which is a significantly more complicated version of the questionnaire for compliance. All Texas Agencies have been instructed to fall under SAQ A to be compliant. If you believe that you have a reason to call the Tokenize API, you need to validate that with DIR and have a solutions call before you integrate this API into your application.
+
+:::

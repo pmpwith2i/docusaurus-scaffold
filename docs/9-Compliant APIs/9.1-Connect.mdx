@@ -1,0 +1,39 @@
+---
+sidebar_position: 1
+sidebar_label: POST Connect
+
+---
+
+# Connect
+
+import ApiBadge from '@site/src/components/ApiBadge';
+
+**[<ApiBadge type="post" /> P2PE/connect](https://developer.fiserv.com/product/SnapPay/api/?type=post&path=/P2PE/connect&branch=main&version=3.0.1)**: A call to the connect endpoint establishes a session between the terminal and the
+terminal service, in this case, your Agency’s application.
+
+### Headers
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| accountid | *string* | Provide the SnapPay account ID as supplied by SnapPay. | Required: Agency Dependent |
+| merchantid | *string* | The Merchant ID. If you provide this parameter, SnapPay will bypass the logic of identifying the merchant ID for the transaction. For transactions of type 'T', always include the Merchant ID. | Required: Agency Dependent |
+
+### Request Schema
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| merchantId | *string* | Your Merchant ID, required for all requests. | Required: Agency Dependent |
+| hsn | *string* | The hardware service number for the terminal. | Required: Agency Dependent |
+| force | *string* | If set to true, any existing sessions are destroyed and any in-flight operations on the terminal are cancelled. If blank, this parameter defaults to defaults to false. | Required: **true** |
+
+### Response Schema
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| X-CardConnect-SessionKey  | *string* | Card connect session key  | Not relevant for Agency Application. Session assumes the same SessionKey throughout |
+
+:::warning[Note]
+We recommend that you enable the force parameter for all Terminal Passthrough API calls.
+:::
+
+The Merchant ID. If you provide this parameter, SnapPay will bypass the logic of identifying the merchant ID for the transaction. For transactions of type 'T', always include the Merchant ID.

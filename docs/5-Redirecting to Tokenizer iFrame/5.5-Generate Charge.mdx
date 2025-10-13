@@ -1,0 +1,250 @@
+---
+sidebar_position: 5
+---
+
+# Generate Charge
+
+:::info[Charge API]
+
+[POST/api/interop/v2/charge](https://developer.fiserv.com/product/SnapPay/api/?type=post&path=/api/interop/v2/charge&branch=main&version=V2): The Charge API performs a credit card charge or payment using a credit
+card token to ensure the credit card is valid, has the requested credit limit available and to initiate the
+transfer of funds. This performs the functions of the Authorize API and Capture API in a single call.
+Once you have the *tokenid* and the *card type*. You can create a JSON Payload by using the code snippet
+below:
+
+:::
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+    defaultValue="java"
+    values={[
+        {label: 'Java', value: 'java'},
+        {label: 'C#', value: 'c#'},
+    ]}>
+<TabItem value="java">
+
+```java showLineNumbers"
+String contentToEncode =
+    String.format("{\"accountid\":\"%s\",\"userid\":\"user\",\"ecomind\":\"E\",\"cof\":\"C\
+        ",\"cofscheduled\":\"N\",\"transactions\":[{\"merchantid\":\"%s\",\"currencycode\":\" %
+        s\ ",\"companycode\":\"%s\",\"customerid\":\"4242\",\"orderid\":\"KPMG00001\",\"sendem
+        ailreceipts\ ":\"N\",\"paymentmethod\":{\"tokenid\":\"%s\",\"transactionamount\":\"124.
+        00\ ",\"cvv\":\"%s\",\"customername\":\"CDI Financial\",\"addressline1\":\"100
+        Ave\ ",\"city\":\"Aurora\",\"state\":\"IL\",\"zip\":\"60603\",\"country\":\"US\",\"emai
+        l\ ":\"first.last@company.com\",\"phonenumber\":\"\",\"type\":\"%s\",\"last4\":\"5454\", \"expirationdate\":\"082030\"},\"clxstream\":{\"transaction\":{\"merchantid\":\"%s\",\
+        "localreferenceid\":\"TRACENO123201\",\"type\":\"PAYMENT\",\"description\":\"Driver
+        License Renewal\ ",\"unitprice\":16,\"quantity\":1,\"sku\":\"SKU001\",\"company\":\"Company\",\
+"
+        fee\ ":\"0.00\",\"department\":\"Department\",\"vendorid\":\"VID01\",\"customerid\":\"
+        CID01\ ",\"agency\":\"agency\",\"batchid\":\"\",\"reportlines\":\"3\",\"reportlinedetai
+        ls\ ":[{\"id\":\"USAS1\",\"attributes\":[{\"name\":\"USAS1AMOUNT\",\"value\":\"1.00\",\
+"
+        type\ ":\"DOLLAR\"},{\"name\":\"USAS1AO\",\"value\":\"1404\",\"type\":\"String\"},{\"n
+        ame\ ":\"USAS1OTHER\",\"value\":\"TRACENO123456
+        09 / 18 / 202413: 36: 0747081132 04\ ",\"type\":\"String\"},{\"name\":\"USAS1PCA\",\"value\":\"90901\",\"type\":\"String\"
+    }, {\
+        "name\":\"USAS1TCODE\",\"value\":\"179\",\"type\":\"String\"},{\"name\":\"USAS1IND
+        EX\ ",\"value\":\"\",\"type\":\"String\"},{\"name\":\"USAS1FUND\",\"value\":\"6101\",\"
+        type\ ":\"String\"},{\"name\":\"USAS1APPDFUND\",\"value\":\"\",\"type\":\"String\"},{\"
+        name\ ":\"USAS1COBJ\",\"value\":\"\",\"type\":\"String\"},{\"name\":\"USAS1AOBJ\",\"val
+        ue\ ":\"\",\"type\":\"String\"},{\"name\":\"USAS1DEPAGENCY\",\"value\":\"\",\"type\":\"
+        String\ "}]},{\"id\":\"USAS2\",\"attributes\":[{\"name\":\"USAS2AMOUNT\",\"value\":\"1.
+        00\ ",\"type\":\"DOLLAR\"},{\"name\":\"USAS2AO\",\"value\":\"6296\",\"type\":\"String\"
+    }, {\
+        "name\":\"USAS2FUND\",\"value\":\"6101\",
+        \"type\":\"String\"},{\"name\":\"USAS2OTH
+        ER\ ",\"value\":\"TRACENO123456 09/18/202413:36:0747081132
+        04\ ",\"type\":\"String\"},{\"name\":\"USAS2PCA\",\"value\":\"90901\",\"type\":\"String\"
+    }, {\
+        "name\":\"USAS2TCODE\",\"value\":\"265\",\"type\":\"String\"},{\"name\":\"USAS2IND
+        EX\ ",\"value\":\"\",\"type\":\"String\"},{\"name\":\"USAS2FUND\",\"value\":\"\",\"type\
+        ":\"String\"},{\"name\":\"USAS2APPDFUND\",\"value\":\"\",\"type\":\"String\"},{\"name\
+        ":\"USAS2COBJ\",\"value\":\"\",\"type\":\"String\"},{\"name\":\"USAS2AOBJ\",\"value\": \ "\",\"type\":\"String\"},{\"name\":\"USAS2DEPAGENCY\",\"value\":\"\",\"type\":\"String\"}]}],\"additionalinfo\":[{\"key\":\"servicecode\",\"value\":\"00000\"},{\"key\":\"
+        username\ ",\"value\":\"user1\"},{\"key\":\"sourceapplication\",\"value\":\"SnapPay\"}, {\
+            "key\":\"companyname\",\"value\":\"Company\"},{\"key\":\"sourceenvironment\",\"value\
+            ":\"QA\"},{\"key\":\"hostname\",\"value\":\"123.123.123.123\"},{\"key\":\"shipfirstna
+            me\ ",\"value\":\"ShipFN\"},{\"key\":\"shiplastname\",\"value\":\"ShipLN\"},{\"key\":\"
+            shipaddressline1\ ",\"value\":\"100 Connell
+            Dr\ "},{\"key\":\"shipaddressline2\",\"value\":\"\"},{\"key\":\"shipcity\",\"value\":\"
+            Berkeley
+            Heights\ "},{\"key\":\"shipstate\",\"value\":\"NJ\"},{\"key\":\"shipcountry\",\"value\": \"US\"},{\"key\":\"shipphone\",\"value\":\"123123123\"},{\"key\":\"shipemail\",\"valu
+            e\ ":\"test@test.com\"},{\"key\":\"billfirstname\",\"value\":\"BillFN\"},{\"key\":\"bil
+            llastname\ ",\"value\":\"BillLN\"},{\"key\":\"billaddressline1\",\"value\":\"100
+            Connell
+            Dr\ "},{\"key\":\"billaddressline2\",\"value\":\"\"},{\"key\":\"billcity\",\"value\":\"
+            Berkeley
+            Heights\ "},{\"key\":\"billstate\",\"value\":\"NJ\"},{\"key\":\"billcountry\",\"value\": \"US\"},{\"key\":\"billphone\",\"value\":\"123123123\"},{\"key\":\"billemail\",\"valu
+            e\ ":\"test@test.com\"}]}}}]}", hmacForm.getAccountId(), hmacForm.getMerchantId(),
+                hmacForm.getCurrencyCode(), hmacForm.getCompanyCode(),
+                // Placeholder values for token ID and CVV
+                paymentMethodRequest.getTokenid(),
+                "123",
+                paymentMethodRequest.getType(),
+                hmacForm.getMerchantId());
+```
+
+</TabItem>
+
+<TabItem value="c#">
+
+```csharp showLineNumbers"
+public async Task < string > GetChargeDAsync(string accountId, string merchantId, string hmac, string url, string jsonPayload) {
+  // Create the request URL
+  var requestUri = new Uri($"{url}/api/interop/v2/charge");
+  Console.Write("requestUri: " + requestUri);
+  // Create the request content with the correct content type
+  var content = new StringContent(jsonPayload, Encoding.UTF8,
+    "application/json");
+  // Create the request message
+  var request = new HttpRequestMessage(HttpMethod.Post, requestUri) {
+    Content = content
+  };
+  // Set necessary headers
+  request.Headers.Add("accountid", accountId);
+  request.Headers.Add("merchantid", merchantId);
+  request.Headers.Add("signature", $ "{hmac}");
+  request.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+  // Add Basic Authentication header
+  var auth =
+    Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_username}:{_password}"));
+  request.Headers.Authorization = new
+  System.Net.Http.Headers.AuthenticationHeaderValue("Basic", auth);
+  // Send the request and get the response
+  var response = await _httpClient.SendAsync(request);
+  if (response.IsSuccessStatusCode) {
+    var responseStr = await response.Content.ReadAsStringAsync();
+    Console.WriteLine("Response ID: " + responseStr);
+    return responseStr;
+    {
+      response.StatusCode
+    }
+  } else {
+    throw new Exception($"Request failed with status code");
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+The next step involves creating an HMAC signature again for the charge request. The
+```HmacUtilGenerator.generateHMAC``` method is used here. The HMAC signature ensures that the API
+request is secure and that the data hasn’t been tampered with.
+
+<Tabs
+    defaultValue="java"
+    values={[
+        {label: 'Java', value: 'java'},
+        {label: 'C#', value: 'c#'},
+    ]}>
+<TabItem value="java">
+
+```java showLineNumbers"
+// Generate the HMAC signature for the charge request
+String hmac = HmacUtilGenerator.generateHMAC(endpoint +
+    "api/interop/v2/charge",
+    "POST", contentToEncode, hmacForm.getAccountId(),
+    secretKey, useBodyContent, useMd5ForHmac);
+```
+
+</TabItem>
+
+<TabItem value="c#">
+
+```csharp showLineNumbers"
+Hmac = HmacUtilGenerator.GenerateHMAC(
+  accountId,
+  endpoint + "api/interop/v2/GetRequestID",
+  secretKey,
+  contentToEncode,
+  method,
+  "Yes",
+  useMd5ForHmac
+);
+```
+
+</TabItem>
+</Tabs>
+
+Parameters:
+1. **URL**: The SnapPay API endpoint
+2. **HTTP Method**: "POST"
+3. **Payload**: The contentToEncode string created earlier
+4. **Account ID**: Retrieved from the form
+5. **Secret Key**: Used to generate the HMAC (retrieved from form or configuration)
+6. **Use Body Content**: Determines if body should be considered for HMAC authentication or not
+7. **MD5 Flag**: Determines if MD5 should be used for hashing
+
+The HMAC is now stored in the hmac variable and will be passed in the API request headers for
+validation.
+
+To make the charge request using the generated HMAC, you can use the code snippet below:
+
+<Tabs
+    defaultValue="java"
+    values={[
+        {label: 'Java', value: 'java'},
+        {label: 'C#', value: 'c#'},
+    ]}>
+<TabItem value="java">
+
+```java showLineNumbers"
+response = snapPayService.charge(hmacForm.getAccountId(), hmacForm.getMerchantId(),
+    contentToEncode, endpoint, hmac);
+```
+
+</TabItem>
+
+<TabItem value="c#">
+
+```csharp showLineNumbers"
+public async Task < JsonResult > OnPostGenerateChargeAsync() {
+  var response = new Dictionary < string,
+    object > ();
+  var snapPayService = new SnapPayService(_httpClient);
+  Console.WriteLine("Charge received for token ID: {TokenID}, Type: {Type}",
+    tokenId, type);
+  string contentToEncode =
+    $ "{{\"accountid\":\"{accountId}\",\"userid\":\"user\",\"ecomind\":\"E\",\"cof\":\"C\",\
+  "cofscheduled\":\"N\",\"transactions\":[\"merchantid\":\"{merchantId}\",\"currencyc
+  ode\ ":\"{currencyCode}\",\"companycode\":\"{companyCode}\",\"customerid\":\"4242\",\"o
+  rderid\ ":\"KPMG00001\",\"sendemailreceipts\":\"N\",\"paymentmethod\":{{\"tokenid\":\"{
+  tokenId
+}\
+",\"transactionamount\":\"124.00\",\"cvv\":\"123\",\"customername\":\"CDI
+Financial\ ",\"addressline1\":\"100
+Ave\ ",\"city\":\"Aurora\",\"state\":\"IL\",\"zip\":\"60603\",\"country\":\"US\",\"emai
+l\ ":\"first.last@company.com\",\"phonenumber\":\"\",\"type\":\"{type}\",\"last4\":\"54
+54\ ",\"expirationdate\":\"082030\"}},\"clxstream\":\"transaction\":{{\"merchantid\":\
+"{merchantId}\",\"localreferenceid\":\"TRACENO123201\",\"type\":\"PAYMENT\",\"descrip
+tion\ ":\"Driver License
+Renewal\ ",\"unitprice\":16,\"quantity\":1,\"sku\":\"SKU001\",\"company\":\"Company\",\
+"
+fee\ ":\"0.00\",\"department\":\"Department\",\"vendorid\":\"VID01\",\"customerid\":\"
+CID01\ ",\"agency\":\"agency\",\"batchid\":\"\",\"reportlines\":\"3\",\"reportlinedetai
+ls\ ":[\"id\":\"USAS1\",\"attributes\":[{{\"name\":\"USAS1AMOUNT\",\"value\":\"1.00\", \"type\":\"DOLLAR\"}},{{\"name\":\"USAS1AO\",\"value\":\"1404\",\"type\":\"String\"}}, {
+    {
+      \
+      "name\":\"USAS1OTHER\",\"value\":\"TRACENO123456
+      09 / 18 / 202413: 36: 0747081132 04\ ",\"type\":\"String\"}}]]}}]}}";
+      Hmac = HmacUtilGenerator.GenerateHMAC(
+        accountId,
+        endpoint + "api/interop/v2/charge",
+        secretKey,
+        contentToEncode,
+        method,
+        "Yes",
+        useMd5ForHmac);
+      string chargeResponse = await snapPayService.GetChargeDAsync(accountId,
+        merchantId, Hmac, "https://snappaydirectapi-cert.fiserv.com", contentToEncode);
+      response["chargeResponse"] = chargeResponse;
+      return new JsonResult(response);
+    }
+```
+
+</TabItem>
+</Tabs>
+
+With these code snippets, you are ready to tokenize a card and execute a charge!

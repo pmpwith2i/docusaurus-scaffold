@@ -1,0 +1,56 @@
+# USAS Requirements
+
+Financial processing in Texas follows the Uniform State Accounting System (USAS). USAS provides both
+GAAP (Generally Accepted Accounting Principles) and cash-basis accounting and satisfies both state and
+agency accounting requirements. USAS captures accounting activities supplied by state agencies and
+institutions of higher education.
+
+Financial data in USAS is used by the Comptroller’s office to produce state payments, agency reports,
+legislative reports, and reports for appropriation management and statewide budgets.
+
+:::warning
+
+The FDMS systems assume the correct entry of USAS data and do not provide error checking. The data
+passes through to the various reporting systems.
+
+:::
+
+:::warning
+
+When calling the Get Request ID API, applications that use USAS are required to pass all USAS data in
+the payload for every transaction. The Get Request ID API includes sections for you to input all necessary
+USAS data. We are assuming you are familiar with both USAS Header and Line data. This section will
+show you how to format and pass your USAS data using the GetRequestID code snippet in Developer
+Studio (screenshots below): [POST/api/interop/v2/GetRequestID](https://developer.fiserv.com/product/SnapPay/api/?type=post&path=/api/interop/v2/GetRequestID&branch=main&version=V2).
+
+:::
+
+The **clxstream** object contains all **USAS Data**:
+
+<img class="bordered" src='/img/3/1.png' style={{width: 400}} />
+
+The **transaction** object contains **USAS Header Data**:
+
+<img class="bordered" src='/img/3/2.png' style={{width: 400}} />
+
+
+The **reportlinedetails** object can contain multiple lines of **USAS Data**:
+Example: Line 1 (Note the pattern of USAS Attributes following the line number 1)
+
+<img class="bordered" src='/img/3/3.png' style={{width: 400}} />
+
+
+Example: Line 2 (Note the pattern of USAS Attributes following the line number 2)
+
+<img class="bordered" src='/img/3/4.png' style={{width: 400}} />
+
+
+With this class, you are ready to generate the Request ID!
+
+
+:::tip[Next Step]
+
+You will be redirecting to the Hosted Page. If you are integrating with the Account Number
+Tokenizer solution, feel free to skip to [Redirecting to Tokenizer iFrame](#).
+
+:::

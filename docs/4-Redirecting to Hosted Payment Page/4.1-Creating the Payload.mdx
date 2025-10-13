@@ -1,0 +1,52 @@
+---
+sidebar_position: 1
+---
+
+# Creating the Payload (contentToEncode)
+
+The payload for the API request is constructed using a ```String.format()``` method. It dynamically injects the
+values from a form into a pre-defined JSON structure. This payload will be sent to the SnapPay API to
+generate the request ID.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+    defaultValue="java"
+    values={[
+        {label: 'Java', value: 'java'},
+        {label: 'C#', value: 'c#'},
+    ]}>
+<TabItem value="java">
+
+```java showLineNumbers"
+String contentToEncode = String.format(
+    "{\"accountid\":\"%s\",\"companycode\":\"%s\",\"currencycode\":\"%s\",\"customerid\":\
+" % s\ "," +
+    "\"userid\":\"%s\",\"transactiontype\":\"%s\",\"paymentmethod\":\"%s\",\"language\":\" %
+    s\ ",\"templateId\":\"%s\"}",
+    form.getAccountId(), form.getCompanyCode(),
+    form.getCurrencyCode(), form.getCustomerId(), form.getUserId(),
+    form.getTransactionType(), form.getPaymentMethod(),
+    form.getLanguage(), form.getTemplateId()
+);
+```
+
+</TabItem>
+
+<TabItem value="c#">
+
+```csharp showLineNumbers"
+string contentToEncode =
+  "{\"accountid\":\"2000104563\",\"companycode\":\"00000\",\"currencycode\":\"USD\",\"cu
+stomerid\ ":\"4242\",\"userid\":\"test@snappay.com\",\"transactiontype\":\"T\",\"paymen
+tmethod\ ":\"CC\",\"language\":\"en-US\",\"templateId\":\"103\"}";
+```
+
+</TabItem>
+</Tabs>
+
+- **Inputs**: These parameters such as *accountId*, *currencyCode*, and others are retrieved from the
+form object, typically bound to a web form submitted by a user.
+- **Output**: The string ```contentToEncode``` is a JSON representation of the transaction details required
+by SnapPay.

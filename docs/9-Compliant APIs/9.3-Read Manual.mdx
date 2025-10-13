@@ -1,0 +1,39 @@
+---
+sidebar_position: 3
+sidebar_label: POST Read Manual
+---
+
+# Read Manual
+
+import ApiBadge from '@site/src/components/ApiBadge';
+
+**[<ApiBadge class='small' type="post" /> P2PE/readManual](https://developer.fiserv.com/product/SnapPay/api/?type=post&path=/P2PE/readManual&branch=main&version=3.0.1)**: A call to the readManual endpoint requests manually-keyed card data and returns a token to be used in a subsequent authorization request to the CardPointe Gateway. The readManual endpoint does not initiate an authorization or capture funds. See Using the [Terminal API Tokenization and Payment Endpoints](https://developer.fiserv.com/product/CardPointe/docs/?path=docs/documentation/CardPointeIntegratedTerminalDeveloperGuides.md&branch=develop#understanding-the-terminal-api-service-endpoints) for more information. WARNING: The readManual endpoint is currently not supported for Clover terminals. See the [CardPointe Integrated Terminal Developer Guide for Clover Terminals](https://developer.fiserv.com/product/CardPointe/docs/?path=docs/documentation/CardPointeIntegratedTerminalDeveloperGuideForCloverTerminals.md&branch=develop) for more information.
+
+### Headers
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| accountid | *string* | Provide the SnapPay account ID as supplied by SnapPay. | Required: Agency Dependent |
+| merchantid | *string* | The Merchant ID. If you provide this parameter, SnapPay will bypass the logic of identifying the merchant ID for the transaction. For transactions of type 'T', always include the Merchant ID. | Required: Agency Dependent |
+
+### Request Schema
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| merchantId | *string* | Your Merchant ID, required for all requests. | Required: Agency Dependent |
+| hsn | *string* | The hardware service number for the terminal. | Required: Agency Dependent |
+| includeSignature | *boolean* | Determines if the terminal prompts for a signature for devices that support signature capture.<br/> Defaults to true if not provided. The format of the signature data returned depends on the following parameters. | Required: **false** |
+| includeExpirationDate | *boolean* | Determines if the terminal prompts the user to enter the expiration date for the card. <br/> Defaults to true if not provided | Optional: Agency Dependent |
+| beep | *boolean* | Determines if the terminal beeps to: <ul><li>Prompt the user to swipe/dip the card.</li><li>Prompt the user to remove the card (EMV transactions).</li><li>Register key presses during PIN entry for debit transactions.</li></ul>If true, beep is enabled. <br/>Defaults to false if not provided. | Optional: Agency Dependent |
+
+### Response Schema
+
+| Parameter | Type | Description |
+|---|---|---|
+| token | *string* | The tokenized card data returned by the system. You will use this token to execute a charge through the SnapPay Charge API. |
+| expiry  | *string* | The card's expiration date in the format MMYY. |
+
+
+:::warning[Note]
+For Texas DIR agencies, you will only need the token and expiry.
+:::

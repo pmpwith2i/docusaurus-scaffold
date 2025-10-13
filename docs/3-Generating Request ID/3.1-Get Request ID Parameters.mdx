@@ -1,0 +1,127 @@
+# Get Request ID Parameters
+
+Below are the parameters for the Service Class that are **required** to generate the Request ID. There are
+additional parameters that you can send depending on your use case:
+| Parameter | Type | Description |
+| --- | --- | --- |
+| accountId | *string* | The account ID associated with the SnapPay request, used for authentication. |
+| merchantId | *string* | The merchant ID involved in the transaction, identifying the merchant in the SnapPay system. |
+| hmac | *string* | The HMAC signature used to securely validate the request. This ensures the integrity and authenticity of the request data. |
+| url | *string* | The base URL of the SnapPay API where the request will be sent. |
+| jsonPayload | *string* | The JSON-formatted request payload containing data relevant to the transaction, such as payment or customer details. |
+| **Return** | SnapPayResponse| A SnapPayResponse object containing important response data like the request ID and status of the API request. |
+| **Throw** | Exception | Thrown if there is any issue with sending the HTTP request or processing the SnapPay API response, such as network errors or invalid response data. |
+
+We are providing you with code snippets below. These are Service Classes used to interact with the
+SnapPay platform to generate Request IDs. The Service Classes will send HTTP requests and handle
+the responses. We assume that you already have an approach to call services, the code snippets below
+are merely an example of how you can invoke the Get Request ID API to generate the Request ID in both
+Java and C#.
+
+
+
+Sample Code to generate Request ID for SnapPay API using **only required parameters**:
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+    defaultValue="java"
+    values={[
+        {label: 'Java', value: 'java'},
+        {label: 'C#', value: 'c#'},
+    ]}>
+<TabItem value="java">
+
+```java showLineNumbers"
+/**
+*
+* Sends a request to the SnapPay API to get a request ID.
+* @param accountId The account ID associated with the request.
+* @param merchantId The merchant ID involved in the transaction.
+* @param hmac The HMAC signature for secure request validation.
+* @param url The base URL of the SnapPay API.
+* @param jsonPayload The JSON payload to be sent in the request body.
+* @return SnapPayResponse object containing the request ID and other response
+data.
+* @throws Exception If there is an error sending the request or processing the
+response.
+*/
+public SnapPayResponse getRequestID(String accountId, String merchantId,
+    String hmac,
+    String url, String jsonPayload) throws
+Exception {
+    // Create an HTTP client with a 10-second timeout and HTTP/2 support
+    HttpClient client = HttpClient.newBuilder()
+        .version(HttpClient.Version.HTTP_2)
+        .connectTimeout(Duration.ofSeconds(10))
+        .build();
+    // Create the Basic Authentication header by encoding username:password in
+    Base64
+    String auth = username + ":" + password;
+    String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
+    String authHeader = "Basic " + encodedAuth;
+    // Build the HTTP POST request with necessary headers and JSON payload
+    HttpRequest request = HttpRequest.newBuilder()
+        .uri(new URI(url + "/api/interop/v2/GetRequestID"))
+        .header("accountid", accountId)
+        .header("merchantid", merchantId)
+        .header("signature", "Hmac " + hmac)
+        .header("Content-Type", "application/json")
+        .header("Accept", "application/json")
+        .header("Authorization", authHeader)
+        .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
+        .build();
+    // Send the HTTP request and get the response as a string
+    HttpResponse < String > response = client.send(request,
+        HttpResponse.BodyHandlers.ofString());
+    // Log the headers of the response for debugging purposes
+    HttpHeaders headers = response.headers();
+    headers.map().forEach((k, v) - > log.info("{}:{}", k, v));
+    // Check if the request was successful (HTTP 200 OK), and parse the response
+    body
+    if (response.statusCode() == 200) {
+        return parseResponse(response.body());
+    } else {
+        // Throw an exception if the request failed
+        throw new RuntimeException("Request failed with status code: " +
+            response.statusCode());
+    }
+}
+```
+
+</TabItem>
+
+<TabItem value="c#">
+
+```csharp showLineNumbers"
+public async Task < IActionResult > OnPostRedirectAsync() {
+  var snapPayService = new SnapPayService(_httpClient);
+  string contentToEncode =
+    "{\"accountid\":\"2000104563\",\"companycode\":\"00000\",\"currencycode\":\"USD\",\"cu
+  stomerid\ ":\"4242\",\"userid\":\"test@snappay.com\",\"transactiontype\":\"T\",\"paymen
+  tmethod\ ":\"CC\",\"language\":\"en-US\",\"templateId\":\"103\"}";
+  Hmac = HmacUtilGenerator.GenerateHMAC(
+    accountId,
+    endpoint + "api/interop/v2/GetRequestID",
+    secretKey,
+    contentToEncode,
+    method,
+    "Yes",
+    useMd5ForHmac);
+  Console.WriteLine("************Hmac: " + Hmac);
+  string requestID = await snapPayService.GetRequestIDAsync("2000104563",
+    "202406060000", Hmac, "https://snappaydirectapi-cert.fiserv.com", contentToEncode);
+  Console.WriteLine("************requestID: " + requestID);
+  HostedPageUrl = $ "https://snappaydirect-
+  cert.fiserv.com / interop / HostedPaymentPage / ProcessRequest ? reqNo = {
+    requestID
+  }
+  ";
+  Console.WriteLine("HostedPageUrl: " + HostedPageUrl);
+  return Page(); // The script will handle the redirection
+}
+```
+
+</TabItem>
+</Tabs>

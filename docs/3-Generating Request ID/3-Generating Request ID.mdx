@@ -1,0 +1,25 @@
+---
+sidebar_position: 2
+---
+
+# Generating Request ID
+
+Now that you have the Utility Class in your project, you will be able to generate the necessary HMAC
+Signature to call the SnapPay APIs. The API we will be calling is the Get Request ID API.
+
+:::warning
+
+The Get Request ID API is only relevant for Hosted Payment Page and Account Number Tokenizer
+Solutions.
+
+:::
+
+:::info[GetRequestID API]
+
+[POST/api/interop/v2/GetRequestID](https://developer.fiserv.com/product/SnapPay/api/?type=post&path=/api/interop/v2/GetRequestID&branch=main&version=V2): The GetRequestID API prepares SnapPay with the information
+required to properly display SnapPay from within an iFrame or as a full page for user interaction to
+Authorize, Charge or Tokenize a credit card or ACH account.
+
+:::
+
+Get Request ID Endpoint: [https://snappaydirectapi-cert.fiserv.com/api/interop/v2/GetRequestID](https://snappaydirectapi-cert.fiserv.com/api/interop/v2/GetRequestID)

@@ -1,0 +1,14 @@
+---
+sidebar_position: 2
+---
+
+# Texas DIR MIDs
+
+Before we dive into the APIs, we need to review MIDs. All devices under your agency will be associated with a MID that will ONLY be used for tokenization. The MIDs associated with devices under Texas DIR will never be used for processing transactions. Your agency application must be used separately to execute a payment through the Charge API using the resulting token.
+
+The MID you use for tokenization has no bearing on the MID that you use to call the Charge API and
+execute a payment.
+
+:::warning[MIDs]
+All devices for your Agency will be ordered under one MID. We will refer to this as the **Device MID**. Your application is responsible for knowing which MID will be used to call the Charge API and execute a payment. We will refer to this as the **Payment MID**
+:::

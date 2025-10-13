@@ -1,0 +1,31 @@
+---
+sidebar_position: 4
+sidebar_label: GET Transaction History
+
+---
+
+# Transaction History
+
+import ApiBadge from '@site/src/components/ApiBadge';
+
+**[<ApiBadge type="get" /> /api/TransactionHistory](https://developer.fiserv.com/product/SnapPay/api/?type=get&path=/api/TransactionHistory&branch=main&version=3.0.1)**: The TransactionHistory download API can report all payment transactions that have occurred on the SnapPay portal. Based on account configuration, this can include payments on the EIPP portal, as well as through the interoperability API’s. Payment information includes invoice details for a complete picture of the intended accounting of the payment. New payments since the last time the API was called are returned by default. This allows calling the API multiple times during the day and being assured that only transactions you have not already received will be returned. If a date range is provided, all transactions within that range will be reported each time the API is called.
+
+### Headers
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| accountid | *string* | Provide the SnapPay account ID as supplied by SnapPay. | Required: Agency Dependent |
+| Signature | *string* | HMAC Signature required for authentication. Refer to the "What's Needed" section under Documentation for more details. | Required: Agency Dependent |
+
+
+### Query
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| startdate | *string* | Start date | Optional: Agency Dependent |
+| enddate | *string* | End date | Optional: Agency Dependent |
+| type | *string* |Type | Optional: Agency Dependent |
+| pagenumber | *number* | Page number | Optional: Agency Dependent |
+| paymentmode  | *string* | CC or ACH or All or empty | Optional: Agency Dependent |
+| requesttype  | *string* | SendLink or Order or Invoice or empty | Optional: Agency Dependent |
+| transactiontype  | *string* | A or S or D or V or empty | Optional: Agency Dependent |

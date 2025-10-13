@@ -1,0 +1,58 @@
+---
+sidebar_position: 2
+sidebar_label: POST Read Card
+
+---
+
+# Read Card
+
+import ApiBadge from '@site/src/components/ApiBadge';
+
+**[<ApiBadge class='small' type="post" /> P2PE/readCard](https://developer.fiserv.com/product/SnapPay/api/?type=post&path=/P2PE/readCard&branch=main&version=3.0.1)**: A call to the readCard endpoint initiates an MSR (magnetic stripe), EMV (chip),
+or NFC (contactless) payment card interaction and returns a token to be used in a subsequent payment
+execution using the SnapPay Charge API. The readCard endpoint does not initiate an authorization or
+capture funds.
+
+### Headers
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| accountid | *string* | Provide the SnapPay account ID as supplied by SnapPay. | Required: Agency Dependent |
+| merchantid | *string* | The Merchant ID. If you provide this parameter, SnapPay will bypass the logic of identifying the merchant ID for the transaction. For transactions of type 'T', always include the Merchant ID. | Required: Agency Dependent |
+
+### Request Schema
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| merchantId | *string* | Your Merchant ID, required for all requests. | Required: Agency Dependent |
+| hsn | *string* | The hardware service number for the terminal. | Required: Agency Dependent |
+| amount | *integer* | The dollar amount to be authorized, with two implied decimal places (for example, to specify "$10.00," enter "1000"). | Required: Agency Dependent |
+| includeSignature | *boolean* | Determines if the terminal prompts for a signature for devices that support signature capture.<br/> Defaults to true if not provided. The format of the signature data returned depends on the following parameters. | Required: **false** |
+| includeAmountDisplay | *boolean* | Determines if the transaction amount is displayed to the user during an MSR or EMV (card-present) transaction. Defaults to true if not provided. | Optional: Agency Dependent |
+| confirmAmount | *boolean* | Determines if the terminal prompts to confirm the the transaction amount prior to prompting to insert/swipe/tap the card. Defaults to true if not provided. | Optional: Agency Dependent |
+| beep | *boolean* | Determines if the terminal beeps to: <ul><li>Prompt the user to swipe/dip the card.</li><li>Prompt the user to remove the card (EMV transactions).</li><li>Register key presses during PIN entry for debit transactions.</li></ul>If true, beep is enabled. <br/>Defaults to false if not provided. | Optional: Agency Dependent |
+| aid | *string* | Sets the default EMV application ID, which processes the request as either a PIN debit or a credit transaction.<br/> See [Accepting PIN Debit Cards](https://developer.fiserv.com/product/CardPointe/docs/?path=docs/documentation/CardPointeIntegratedTerminalDeveloperGuides.md&branch=develop#accepting-pin-debit-cards) for detailed information on PIN Debit requirements and application workflows. <br/>**Note:** PIN debit is only supported for qualified merchants boarded on the First Data North and Rapid Connect processing platforms. <br/> Supported values are: <ul><li>debit - Set to debit for EMV cards with a debit AID to request a PIN.</li><li>credit - Set to credit for all other cards. This is the default if no AID is specified.</li></ul> | Optional: Agency Dependent |
+
+### Response Schema
+
+| Parameter | Type | Description |
+|---|---|---|
+| token  | *string* | The tokenized card data returned by the system. You will use this token to execute a charge through the SnapPay Charge API.  |
+| expiry  | *string* | The card's expiration date in the format MMYY. |
+| name  | *string* | The cardholder's name on the card.<br/>The name is not returned if the card or mobile wallet is read through NFC (contactless). |
+| singleUseToken  | *boolean* | Specifies if the token is only valid for a single use. <br/>Set to true if the card or mobile wallet is read through NFC (contactless). |
+
+
+:::warning[Note]
+For Texas DIR agencies, you will only need the token and expiry.
+:::
+
+:::tip[Amount]
+If the amount is known, we recommend that you confirm amount and include amount display. Otherwise,
+you can leave both parameters as false.
+:::
+
+
+| confirmAmount = ``true`` | includeAmountDisplay = ``true`` |
+|---|---|
+| <img class="bordered" src='/img/9/1.png' style={{width: 400}} /> | <img class="bordered" src='/img/9/2.png' style={{width: 400}} /> |

@@ -1,0 +1,259 @@
+---
+sidebar_position: 1
+---
+
+# Generating HMAC Signature
+
+Now that you have your development environment set up, let’s look at authentication. To properly access
+and make calls to the SnapPay APIs, you will need to authenticate your requests. To do so, you’ll need to
+generate HMAC authentication.
+
+:::info[What is HMAC authentication?]
+
+[HMAC authentication](https://en.wikipedia.org/wiki/Hash-based_message_authentication_code), also known as hash-based message authentication code, is a cryptographic
+authentication scheme involving a hash function used in combination with a secret key.
+We are providing you a code snippet below. This is a Utility Class used for generating an HMAC
+Authentication Code. This class provides methods to create a secure HMAC Signature for requests using
+HMAC-SHA256 algorithm.
+
+:::
+
+Things to note:
+1. A new HMAC is required for all API calls.
+2. Each HMAC can only be used once. The same HMAC cannot be reused for other API calls or the
+same API.
+3. HMACs must be used within a specific timeframe. The time limit is 5 minutes in the lower
+environment and 20 seconds in the Production environment.
+4. The time limit is soft configurable in the application at the global level
+5. **Ensure to generate the token in UTC time zone.**
+6. Any error related to the HMAC header parameter will be a general authentication error.
+
+--- 
+
+### Utility Class Parameters
+
+We suggest that you create a Utility package and copy the code below within your existing project.
+
+Below are the parameters for the Utility Class that are **required** to generate the HMAC Signature:
+| Parameter | Type | Description |
+| --- | --- | --- |
+| url | *string* | The URL or endpoint for the API request. |
+| method | *string* | The HTTP method (e.g., GET, POST) for the API request. |
+| payLoad | *string* |The body of the request, often containing the data to be sent in the API call. |
+| accountId | *long* | The account identifier used for authenticating the request. |
+| key | *string* | The secret key used to generate the HMAC signature, ensuring secure communication between the client and server. |
+| ConsiderBodyForHMAC | *string* | Determines if body should be considered for HMAC authentication or not. |
+| useMD5ForHMAC  | *string* | A flag indicating whether to use MD5 hashing for the payload. If “Y”, the payload will be hashed using MD5 before generating the HMAC signature. |
+| **Return** | *string* | The generated HMAC signature. |
+| **Throw** | *NoSuchAlgorithmException* | Exception thrown if the required cryptographic algorithm (HMAC) is unavailable in the environment. |
+
+#
+
+Utility to Generate **HMAC Signature**:
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+    defaultValue="java"
+    values={[
+        {label: 'Java', value: 'java'},
+        {label: 'C#', value: 'c#'},
+    ]}>
+<TabItem value="java">
+
+```java showLineNumbers"
+/**
+*
+* Generates HMAC for API requests with optional MD5 payload hashing.
+* @param url * @param method * @param payLoad * @param accountId * @param key the request.
+payload.
+*
+* @return signature.
+in the environment.
+*/
+String accountId,
+NoSuchAlgorithmException {
+    The URL or endpoint
+    for the request.
+    HTTP method(e.g., GET, POST).
+    Request body(payload).
+    Account identifier used
+    for authentication.
+    Secret key
+    for generating the HMAC signature.*@param useBodyContent Flag to determine
+    if body payload should be applied to
+        *
+        @param useMD5ForHMAC Flag to determine
+    if MD5 hashing should be applied to the
+    A map containing various details, including the HMAC
+        *
+        @throws NoSuchAlgorithmException
+    if the cryptographic algorithm is unavailable
+    public static String generateHMAC(String url, String method, String payLoad,
+        String key, String useBodyContent, String useMD5ForHMAC) throws
+    String hmacData64String = null; // Variable to store the final HMAC Base64-
+    encoded string
+    // Get the current UTC timestamp
+    Instant now = Instant.now();
+    log.info("Timestamp UTC: {}", now); // Log the current time in UTC
+    // Convert timestamp to seconds (Epoch time)
+    String timestamp = Long.toString(now.getEpochSecond());
+    // Generate a random UUID for nonce (number used once), ensuring uniqueness for
+    each request
+    String nonce = UUID.randomUUID().toString();
+    log.info("Nonce used is: {}", nonce); // Log the generated nonce
+    String mdresult = ""; // Variable to store the result of MD5 hash, if used
+    if ("Y".equalsIgnoreCase(useBodyContent)) {
+        //Checking if the request contains body, usually will be null with HTTP GET
+        and DELETE
+        if (payLoad != null) {
+            // Check if MD5 hashing should be applied to the payload
+            if ("Y".equalsIgnoreCase(useMD5ForHMAC)) {
+                byte[] content = payLoad.getBytes(StandardCharsets.UTF_8); // Convert
+                payload to bytes
+                MessageDigest md = MessageDigest.getInstance("MD5"); // Get MD5 digest
+                instance
+                md.update(content); // Update the digest with the payload content
+                mdresult = new String(Base64.getEncoder().encode(md.digest())); // Encode
+                MD5 hash to Base64
+            } else {
+                // If MD5 is not required, keep the original payload in mdresult
+                mdresult = payLoad; // No transformation applied if MD5 is not needed
+            }
+        }
+        // Concatenate the required elements to form the signature's raw data
+        String signatureRawData = accountId + method + url + timestamp + nonce +
+            mdresult;
+        log.info("signatureRawData: {}", signatureRawData); // Log the raw data used for
+        generating the signature
+        // Convert the secret key from Base64 encoding to a byte array
+        byte[] secretKeyByteArray = Base64.getDecoder().decode(key);
+        // Convert the raw signature data to bytes
+        byte[] signature = signatureRawData.getBytes(StandardCharsets.UTF_8);
+        try {
+            // Initialize HMAC with the HmacSHA256 algorithm
+            final Mac hMacSHA256 = Mac.getInstance(HMAC_SHA256);
+            // Initialize the Mac instance with the secret key
+            final SecretKeySpec secretKey = new SecretKeySpec(secretKeyByteArray,
+                HMAC_SHA256);
+            hMacSHA256.init(secretKey);
+            // Generate the HMAC signature as a byte array
+            byte[] signaturebytes = hMacSHA256.doFinal(signature);
+            // Convert the HMAC signature to a Base64-encoded string
+            String Signature64String = Base64.getEncoder().encodeToString(signaturebytes);
+            // Construct the full HMAC data string, which includes account, signature,
+            nonce, and timestamp
+            String HmacData = accountId + ":" + Signature64String + ":" + nonce + ":" +
+                timestamp;
+            log.info("hmacData: {}", HmacData); // Log the HMAC data string
+            // Encode the HmacData string to Base64 for transmission
+            hmacData64String = new
+            String(Base64.getEncoder().encode(HmacData.getBytes()));
+        } catch (Exception e) {
+            e.printStackTrace(); // Print the stack trace for debugging
+            log.error(e.getMessage()); // Log the error message
+        }
+        // Return the map containing all details
+        return hmacData64String;
+    }
+}
+```
+
+</TabItem>
+
+<TabItem value="c#">
+
+```csharp showLineNumbers"
+public static string GenerateHMAC(string accountId, string url, string secretKey,
+  string input, string action, string includeBody, string useMd5) {
+  string output = string.Empty;
+  try {
+    string data = input;
+    string requestContentBase64String = string.Empty;
+    string sharedSecretKey = secretKey;
+    string requestUri = url;
+    string requestHttpMethod = action;
+
+    string accountid = accountId;
+    HttpRequestMessage req = new
+    HttpRequestMessage(requestHttpMethod.Equals("GET") ? HttpMethod.Get : HttpMethod.Post,
+      url);
+    req.Content = new StringContent(data, Encoding.UTF8,
+      "application/json");
+    //Calculate UNIX time
+    DateTime epochStart = new DateTime(1970, 01, 01, 0, 0, 0, 0,
+      DateTimeKind.Utc);
+    TimeSpan timeSpan = DateTime.UtcNow - epochStart;
+    string requestTimeStamp =
+      Convert.ToUInt64(timeSpan.TotalSeconds).ToString();
+    output += "Request time stamp used is " + requestTimeStamp +
+      Environment.NewLine;
+    //create random nonce for each request
+    string nonce = Guid.NewGuid().ToString("N");
+    output += "Nonce used is " + nonce + Environment.NewLine;
+    if (includeBody.Equals("Yes")) {
+      //Checking if the request contains body, usually will be null with
+      HTTP GET and DELETE
+      if (req.Content != null) {
+        if (useMd5.Equals("Yes")) {
+          byte[] content =
+            req.Content.ReadAsByteArrayAsync().Result;
+          MD5 md5 = MD5.Create();
+          //Hashing the request body, any change in request body
+          will result in different hash, we 'll incure message integrity
+          byte[] requestContentHash = null;
+          if (content.Length != 0) {
+            requestContentHash = md5.ComputeHash(content);
+          }
+          if (requestContentHash != null) {
+            requestContentBase64String =
+              Convert.ToBase64String(requestContentHash);
+          }
+          output += "Request Content converted to base 64 string is
+          " + requestContentBase64String + Environment.NewLine;
+        } else {
+          requestContentBase64String =
+            req.Content.ReadAsStringAsync().Result;
+        }
+      }
+    }
+    //Creating the raw signature string
+    string signatureRawData = String.Format("{0}{1}{2}{3}{4}{5}",
+      accountid, requestHttpMethod, requestUri, requestTimeStamp, nonce,
+      requestContentBase64String);
+    output += "Signature raw data is " + signatureRawData +
+      Environment.NewLine;
+    //Convert API Shared key to base 64 string
+    var secretKeyByteArray = Convert.FromBase64String(sharedSecretKey);
+    //Convert signature raw data to encoding utf 8
+    byte[] signature = Encoding.UTF8.GetBytes(signatureRawData);
+    string requestSignatureBase64String = string.Empty;
+    //create hmac from api shared key which is converted to base 64 string
+    using(HMACSHA256 hmac = new HMACSHA256(secretKeyByteArray)) {
+      //convert encoded utf 8 signature to hash
+      byte[] signatureBytes = hmac.ComputeHash(signature);
+      //convert hash signature to base 64 string
+      requestSignatureBase64String =
+        Convert.ToBase64String(signatureBytes);
+      output += "Request Signature converted to base 64 string is " +
+        requestSignatureBase64String + Environment.NewLine;
+      string signatureData = string.Format("{0}:{1}:{2}:{3}", accountid,
+        requestSignatureBase64String, nonce, requestTimeStamp);
+      output += "HMAC signature is " + signatureData +
+        Environment.NewLine;
+      string hmacHeader = "Hmac " +
+        Convert.ToBase64String(Encoding.UTF8.GetBytes(signatureData));
+      output = hmacHeader;
+    }
+  } catch (Exception ex) {
+    output += "Exception occured is " + ex.Message + Environment.NewLine;
+  }
+  return output;
+}
+```
+
+</TabItem>
+</Tabs>
+
+With this class, you are ready to generate the HMAC Signature!

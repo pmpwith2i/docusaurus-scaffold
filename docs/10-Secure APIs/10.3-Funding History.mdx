@@ -1,0 +1,26 @@
+---
+sidebar_position: 3
+sidebar_label: GET Funding History
+
+---
+
+# Funding History
+
+import ApiBadge from '@site/src/components/ApiBadge';
+
+**[<ApiBadge type="get" /> /api/FundingHistory](https://developer.fiserv.com/product/SnapPay/api/?type=get&path=/api/FundingHistory&branch=main&version=3.0.1)**: This API reports amounts that are funded in merchant bank account along with payment transactions. Payment transactions include credit card transactions. ACH transactions are considered funded if SnapPay does not receive any reject for five business days. This API is supported for CardConnect and CardX only.
+
+### Headers
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| accountid | *string* | Provide the SnapPay account ID as supplied by SnapPay. | Required: Agency Dependent |
+| Signature | *string* | HMAC Signature required for authentication. Refer to the "What's Needed" section under Documentation for more details. | Required: Agency Dependent |
+
+
+### Query
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| startdate | *string* | Start date | Optional: Agency Dependent |
+| enddate | *string* | End date | Optional: Agency Dependent |
