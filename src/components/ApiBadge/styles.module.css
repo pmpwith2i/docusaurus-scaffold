@@ -1,0 +1,28 @@
+.apiBadge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: white;
+}
+
+.get {
+  background-color: #4caf50; /* A shade of green */
+}
+
+.post {
+  background-color: #ff9800; /* A shade of orange */
+}
+
+.put {
+  background-color: #2196f3; /* A shade of blue */
+}
+
+.delete {
+  background-color: #f44336; /* A shade of red */
+}
+
+.beta {
+  background-color: #9c27b0; /* A shade of purple */
+}

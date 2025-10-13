@@ -1,0 +1,55 @@
+---
+sidebar_position: 5
+sidebar_label: POST Display
+---
+
+# Display
+
+import ApiBadge from '@site/src/components/ApiBadge';
+
+**[<ApiBadge class='small' type="post" /> P2PE/display](https://developer.fiserv.com/product/SnapPay/api/?type=post&path=/P2PE/display&branch=main&version=3.0.1)**: A call to the display endpoint sends a text string, which is displayed on the idle terminal.
+
+### Headers
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| accountid | *string* | Provide the SnapPay account ID as supplied by SnapPay. | Required: Agency Dependent |
+| merchantid | *string* | The Merchant ID. If you provide this parameter, SnapPay will bypass the logic of identifying the merchant ID for the transaction. For transactions of type 'T', always include the Merchant ID. | Required: Agency Dependent |
+
+### Request Schema
+
+| Parameter | Type | Description | Texas DIR |
+|---|---|---|---|
+| merchantId | *string* | Your Merchant ID, required for all requests. | Required: Agency Dependent |
+| hsn | *string* | The hardware service number for the terminal. | Required: Agency Dependent |
+| text | *string* | The text to send to the terminal display. The terminal display is limited to 1000 characters. To create a line break to display a multi-line message, include ``\n``. If this field is blank, the terminal display is cleared. | Required: Agency Dependent |
+
+**On a Clover terminal**: sending either a single or multi-line message replaces the idle image with the
+message, along with the logo image (if one is configured for the device).
+
+**On an Ingenico terminal**: sending a single-line string displays the text in the display footer area, retaining
+the idle image. Sending a multi-line string displays the text in the primary display area, replacing the idle
+image. Additionally, you can send a blank string, which clears any existing prompts and returns the
+terminal display to an idle state. The terminal display is limited to 1000 characters.
+
+**Single-line string**
+``` 
+"text": "single-line string" 
+```
+<img src='/img/9/3.png' style={{width: 300}} />
+
+<br /><br />
+
+**Multiple-line string**
+```
+"text": "multiple\nline\nstring"
+```
+<img src='/img/9/4.png' style={{width: 300}} />
+
+<br /><br />
+
+**Blank string**
+``` 
+"text": "" 
+```
+<img src='/img/9/5.png' style={{width: 300}} />
