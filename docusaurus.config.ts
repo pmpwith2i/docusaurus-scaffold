@@ -81,14 +81,14 @@ const config: Config = {
         src: 'img/logo_confidence_blue.svg',
       },
       // won't have top level links for POC
-      // items: [
-      //   {
-      //     type: 'docSidebar',
-      //     sidebarId: 'tutorialSidebar',
-      //     position: 'left',
-      //     label: 'Guide',
-      //   },
-      // ],
+      items: [
+        {
+          type: 'docSidebar',
+          sidebarId: 'tutorialSidebar',
+          position: 'left',
+          label: 'Docs',
+        },
+      ],
     },
     footer: {
       style: 'light',
