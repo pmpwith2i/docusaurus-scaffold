@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@confidencesystemsinc/sdk':
-        specifier: 1.5.2
-        version: 1.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 1.5.4
+        version: 1.5.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@docusaurus/core':
         specifier: 3.9.1
         version: 3.9.1(@mdx-js/react@3.1.1(@types/react@19.2.0)(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)
@@ -721,8 +721,8 @@ packages:
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
     engines: {node: '>=0.1.90'}
 
-  '@confidencesystemsinc/sdk@1.5.2':
-    resolution: {integrity: sha512-W9ZZzb1EKdtMOM+3nHohPdZjU7wmcDLHamkjUQPNhDNKwCFQUbOybuKGgedWaQSzkPIt1J44yMtYKr388o04jw==}
+  '@confidencesystemsinc/sdk@1.5.4':
+    resolution: {integrity: sha512-YmJcdMC8k9Bdz5i54qdgt5+e9ERSg5uv+W3yYH8ERxoNV5hAeVg47XnT5+70rIWIaN5SnWsojvpFtZLewNsqTQ==}
     peerDependencies:
       react: '>=17.0.0'
       react-dom: '>=17.0.0'
@@ -5853,7 +5853,7 @@ snapshots:
   '@colors/colors@1.5.0':
     optional: true
 
-  '@confidencesystemsinc/sdk@1.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@confidencesystemsinc/sdk@1.5.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
