@@ -46,3 +46,7 @@
 img.bordered {
   border: 2px solid #ddd;
 }
+
+.apiBadge_PxCz {
+  padding: 0rem 0.5rem !important;
+}
