@@ -50,28 +50,3 @@ tmethod\ ":\"CC\",\"language\":\"en-US\",\"templateId\":\"103\"}";
 form object, typically bound to a web form submitted by a user.
 - **Output**: The string ```contentToEncode``` is a JSON representation of the transaction details required
 by SnapPay.
-
-import { ConfidencePlaybook } from '@confidencesystemsinc/sdk';
-import BrowserOnly from '@docusaurus/BrowserOnly';
-export const Playbook = ({children, color}) => (
-  <BrowserOnly>
-    {() => <ConfidencePlaybook.AutoInstantiated email='iphatak4s@yahoo.com' bank='fiserv' playbookId='RSQ-GMYM8SG0JG' timezone='America/Los_Angeles'
-
-    playbookMode='list'
-   playbookStyle={{
-        overlay: {
-          position: "right",
-          offset: {
-            right: 0,
-          },
-          size: {
-            width: 500,
-            height: "calc(100vh - 4.75rem)",
-          },
-        },
-      }}
-   />}
-   </BrowserOnly>
-);
-
-<Playbook />

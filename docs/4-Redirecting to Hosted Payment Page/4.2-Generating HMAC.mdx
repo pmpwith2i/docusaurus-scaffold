@@ -59,27 +59,6 @@ The HMAC is now stored in the hmac variable and will be passed in the API reques
 validation.
 
 
-import { ConfidencePlaybook } from '@confidencesystemsinc/sdk';
-import BrowserOnly from '@docusaurus/BrowserOnly';
-export const Playbook = ({children, color}) => (
-  <BrowserOnly>
-    {() => <ConfidencePlaybook.AutoInstantiated email='iphatak4s@yahoo.com' bank='fiserv' playbookId='RSQ-GMYM8SG0JG' timezone='America/Los_Angeles'
+import { ConfidencePlaybookWrapper } from '@site/src/components/ConfidencePlaybookWrapper';
 
-    playbookMode='list'
-   playbookStyle={{
-        overlay: {
-          position: "right",
-          offset: {
-            right: 0,
-          },
-          size: {
-            width: 500,
-            height: "calc(100vh - 4.75rem)",
-          },
-        },
-      }}
-   />}
-   </BrowserOnly>
-);
-
-<Playbook />
+<ConfidencePlaybookWrapper />
