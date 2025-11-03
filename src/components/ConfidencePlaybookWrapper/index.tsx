@@ -3,7 +3,7 @@ import BrowserOnly from "@docusaurus/BrowserOnly";
 
 export const ConfidencePlaybookWrapper = () => (
     <BrowserOnly>
-        {() => <ConfidencePlaybook.AutoInstantiated email='iphatak4ss@yahoo.com' bank='fiserv' playbookId='RSQ-GMYM8SG0JG' timezone='America/Los_Angeles'
+        {() => <ConfidencePlaybook.AutoInstantiated email='iphatak4s@yahoo.com' bank='fiserv' playbookId='RSQ-GMYM8SG0JG' timezone='America/Los_Angeles'
 
             playbookMode='list'
             playbookStyle={{
