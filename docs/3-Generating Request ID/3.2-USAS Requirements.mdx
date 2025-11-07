@@ -1,3 +1,10 @@
+---
+pagination_next: null
+pagination_prev: null
+custom_edit_url: null
+slug: /generate-request-id/usas-requirements
+---
+
 # USAS Requirements
 
 Financial processing in Texas follows the Uniform State Accounting System (USAS). USAS provides both
@@ -27,30 +34,124 @@ Studio (screenshots below): [POST/api/interop/v2/GetRequestID](https://developer
 
 The **clxstream** object contains all **USAS Data**:
 
-<img class="bordered" src='/img/3/1.png' style={{width: 400}} />
+
+```json showLineNumbers
+  }
+],
+// highlight-start
+"clxstream": [
+// highlight-end
+  {
+    "transaction": {
+      "merchantid": "",
+      "localreferenceid": "XXXXXXXXX",
+      "type": "XXXXXXXX",
+      "paymenttype": "XXXXXXXX",
+      "description": "Description",
+      "unitprice": 16,
+      "quantity": 1,
+      "sku": "XXXXXXXXXX",
+      "company": "Company",
+      ...
+```
 
 The **transaction** object contains **USAS Header Data**:
 
-<img class="bordered" src='/img/3/2.png' style={{width: 400}} />
-
+```json showLineNumbers
+"clxstream": [
+  {
+    "transaction": {
+      // highlight-start
+      "merchantid": "",
+      "localreferenceid": "XXXXXXXXX",
+      "type": "XXXXXXXX",
+      "paymenttype": "XXXXXXXX",
+      "description": "Description",
+      "unitprice": 16,
+      "quantity": 1,
+      "sku": "XXXXXXXXXX",
+      "company": "Company",
+      "fee": "1.00",
+      "department": "Department",
+      "vendorid": "",
+      "customerid": "",
+      "agency": "",
+      "batchid": "",
+      "reportlines": "3",
+      // highlight-end
+      "reportlinedetails": [ ... ],
+      "additionalinfo": [ ... ]
+    }
+  },
+  {
+    "feetransaction": { ... }
+  }
+]
+```
 
 The **reportlinedetails** object can contain multiple lines of **USAS Data**:
+
 Example: Line 1 (Note the pattern of USAS Attributes following the line number 1)
 
-<img class="bordered" src='/img/3/3.png' style={{width: 400}} />
+```json showLineNumbers
+"batchid": "",
+"reportlines": "3",
+"reportlinedetails": [
+// highlight-start
+  {
+    "id": "XXXX1",
+    "attributes": [
+      {
+        "name": "XXXX1AMOUNT",
+        "value": "XXXX",
+        "type": "DOLLAR"
+      },
+      {
+        "name": "XXXX1A0O",
+        "value": "XXXX",
+        "type": "String"
+      },
+      {
+        "name": "XXXX1OTHER",
+        "value": "XXXX   XXXXXXX    XX    ",
+        "type": "String"
+      }
+    ]
+  }
+// highlight-end
+],
+"additionalinfo": [ ... ]
+```
 
 
 Example: Line 2 (Note the pattern of USAS Attributes following the line number 2)
 
-<img class="bordered" src='/img/3/4.png' style={{width: 400}} />
-
-
-With this class, you are ready to generate the Request ID!
-
-
-:::tip[Next Step]
-
-You will be redirecting to the Hosted Page. If you are integrating with the Account Number
-Tokenizer solution, feel free to skip to [Redirecting to Tokenizer iFrame](#).
-
-:::
+```json showLineNumbers
+"batchid": "",
+"reportlines": "3",
+"reportlinedetails": [
+  {
+    // highlight-start
+    "id": "XXXX1",
+    "attributes": [
+      {
+        "name": "XXXX1AMOUNT",
+        "value": "XXXX",
+        "type": "DOLLAR"
+      },
+      {
+        "name": "XXXX1A0O",
+        "value": "XXXX",
+        "type": "String"
+      },
+      {
+        "name": "XXXX1OTHER",
+        "value": "XXXX   XXXXXXX    XX    ",
+        "type": "String"
+      }
+      // highlight-end
+    ]
+  }
+],
+"additionalinfo": [ ... ]
+```

@@ -1,0 +1,91 @@
+---
+sidebar_position: 1
+title: Introduction
+pagination_next: null
+pagination_prev: null
+custom_edit_url: null
+slug: /introduction
+---
+
+import ApiBadge from '@site/src/components/ApiBadge';
+
+# Quick Start Guide
+
+## Payment Solutions
+
+SnapPay provides fast, easy and reliable credit card processing services for online payments. This guide gives the detailed information required to integrate with SnapPay payment processing solutions through the following avenues:
+
+- **[Hosted Payment Page](./hosted-payment-page)**: Redirects user to SnapPay Hosted Payment Page. User fills out Credit
+Card/Bank Account details. Upon submitting, SnapPay will process the payment and post the
+result parameters back to calling system.
+- **[Account Number Tokenizer](#account-number-tokenizer-card-present)**: Tokenizes a credit card number. Used in conjunction with [Secure APIs](./secure-apis/) for payment execution.
+- **[Secure APIs](./secure-apis/)** : Application uses Secure Payment APIs for more complex payment flows. Different
+features and functions may be called depending on your application’s customizable payment
+flows.
+
+## Device Integrations
+
+Additionally, SnapPay offers the following avenues for device/terminal integration:
+
+- **[Hosted Payment Page + Swipe](./hosted-payment-page/swipe)**: Redirects user to SnapPay Hosted Payment Page. Card is
+physically swiped for payment information. Upon submitting, SnapPay will process the payment
+and post the result parameters back to calling system.
+- **[Account Number Tokenizer (Card not Present)](#account-number-tokenizer-card-not-present)**: For Call Centers with a SREDKey Device ONLY. Tokenizes a credit card number using input from SREDKey. Used in conjunction with
+[Secure APIs](./secure-apis/) for payment execution.
+- **[Terminal Passthrough APIs](./compliant-apis/)**: Devices are configured to make API calls to SnapPay with Credit
+Card information.
+
+## APIs
+
+### Hosted Payment Page 
+Redirects user to SnapPay [Hosted Payment Page](./hosted-payment-page). User fills out Credit
+Card/Bank Account details. Upon submitting, SnapPay will process the payment and post the
+result parameters back to calling system. Used in conjunction with Secure APIs for transaction
+verification.
+* Get Request ID: **[<ApiBadge type="post" /> /api/interop/v2/GetRequestID](./generate-request-id)**
+* Get Transaction: **[<ApiBadge type="post" /> /api/interop/v2/getTransaction](./secure-apis/getTransaction)**
+
+
+### Hosted Payment Page with Swipe
+Redirects user to SnapPay [Hosted Payment Page](./hosted-payment-page). Card is
+physically swiped for payment information. Upon submitting, SnapPay will process the payment
+and post the result parameters back to calling system. Used in conjunction with [Secure APIs](./secure-apis/) for
+transaction verification.
+* Get Request ID: **[<ApiBadge type="post" /> /api/interop/v2/GetRequestID](./generate-request-id)**
+* Get Transaction: **[<ApiBadge type="post" /> /api/interop/v2/getTransaction](./secure-apis/getTransaction)**
+
+### Account Number Tokenizer (Card Present) 
+Tokenizes a credit card number. Used in conjunction with [Secure APIs](./secure-apis/) for payment execution.
+* Get Request ID: **[<ApiBadge type="post" /> /api/interop/v2/GetRequestID](./generate-request-id)**
+* Charge: **[<ApiBadge type="post" /> /api/interop/v2/charge](./secure-apis/charge)**
+
+### Account Number Tokenizer (Card Not Present)
+For Call Centers with a SREDKey 2 Device
+ONLY. Tokenizes a credit card number using input from SREDKey 2. Used in conjunction with [Secure APIs](./secure-apis/) for payment execution.
+* Get Request ID: **[<ApiBadge type="post" /> /api/interop/v2/GetRequestID](./generate-request-id)**
+* Charge: **[<ApiBadge type="post" /> /api/interop/v2/charge](./secure-apis/charge)**
+
+### Secure APIs
+Application uses [Secure APIs](./secure-apis/) for more complex payment flows. Different
+features and functions may be called depending on your application’s customizable payment
+flows.
+* Charge: **[<ApiBadge type="post" /> /api/interop/v2/charge](./secure-apis/charge)**
+* Get Transaction: **[<ApiBadge type="post" /> /api/interop/v2/getTransaction](./secure-apis/getTransaction)**
+* Funding History: **[<ApiBadge type="get" /> /api/FundingHistory](./secure-apis/FundingHistory)**
+* Transaction History: **[<ApiBadge type="get" /> /api/TransactionHistory](./secure-apis/TransactionHistory)**
+* Send Payment Link: **[<ApiBadge type="post" /> /api/interop/sendpaymentlink](./secure-apis/sendpaymentlink)**
+* Tokenize: **[<ApiBadge type="post" /> /api/interop/tokenize](./secure-apis/tokenize)**
+
+### Device (Terminal Passthrough)
+[Terminal Passthrough APIs](./compliant-apis/) allow you to integrate secure FDMS terminals into your application
+* Connect:  **[<ApiBadge type="post" /> P2PE/connect](./compliant-apis/connect)**
+* Read Card: **[<ApiBadge type="post" /> P2PE/readCard](./compliant-apis/readCard)**
+* Read manual: **[<ApiBadge type="post" /> P2PE/readManual](./compliant-apis/readManual)**
+* Disconnect: **[<ApiBadge type="post" /> P2PE/disconnect](./compliant-apis/disconnect)**
+* Display: **[<ApiBadge type="post" /> P2PE/display](./compliant-apis/display)**
+* Clear Display: **[<ApiBadge type="post" /> P2PE/clearDisplay](./compliant-apis/clearDisplay)**
+* Read signature: **[<ApiBadge type="post" /> P2PE/readSignature](./compliant-apis/readSignature)**
+* Read confirmation: **[<ApiBadge type="post" /> P2PE/readConfirmation](./compliant-apis/readConfirmation)**
+* Read input: **[<ApiBadge type="post" /> P2PE/readInput](./compliant-apis/readInput)**
+* List Terminals: **[<ApiBadge type="post" /> P2PE/listTerminals](./compliant-apis/listTerminals)**
+* Cancel: **[<ApiBadge type="post" /> P2PE/cancel](./compliant-apis/cancel)**

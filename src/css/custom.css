@@ -29,6 +29,18 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 123, 255, 0.3);
 }
 
+.red-text {
+  color:red;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.no-table-header table thead {
+  display: none;
+}
+
 /* custom Confidence styles */
 .navbar__title {
   flex: 1 1 auto;
@@ -45,4 +57,13 @@
 
 img.bordered {
   border: 2px solid #ddd;
+}
+
+.apiBadge_PxCz {
+  padding: 0rem 0.5rem !important;
+}
+
+.theme-code-block pre {
+  max-height: 650px; /* Example: set a maximum height */
+  overflow-y: auto; /* Enables vertical scrollbar when content overflows */
 }
